@@ -1,0 +1,17 @@
+Package: downr
+Type: Package
+Title: Shiny Download App
+Version: 0.1
+Date: 2025-11-10
+Authors@R: c(person("Brian S Yandell", "Author",
+                role = c("aut", "cre"),
+                email = "brian.yandell@wisc.edu"))
+Description: Shiny Download App for use in other shiny apps.
+License: GPL-3
+Imports:
+    bslib, DT, ggplot2, shiny
+Suggests:
+    knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.3.3
+Encoding: UTF-8
