@@ -24,7 +24,7 @@ downloadApp <- function() {
     downloadUI("download"),     # width and height for plot
     bslib::card(
       bslib::card_header("Download Preview"),
-      downloadPreview("download")    # Only for Preview of downloadApp().
+      downloadOutput("download")    # Only for Preview of downloadApp().
     )
   )
   server <- function(input, output, session) { 
@@ -275,7 +275,7 @@ downloadUI <- function(id) {
   ns <- shiny::NS(id)
   shiny::uiOutput(ns("dims"))
 }
-downloadPreview <- function(id) {
+downloadOutput <- function(id) {
   ns <- shiny::NS(id)
   shiny::uiOutput(ns("preview"))
 }
