@@ -18,30 +18,25 @@ downloadTableApp <- function() {
   server <- function(input, output, session) { 
     download_Table <- shiny::reactive(matrix(1:12,nrow=3))
     download_Filename <- shiny::reactive(c(Table = "twelve"))
-    download_list <- shiny::reactiveValues(
-      Filename = download_Filename,
-      Table = download_Table)
-    
-    downloadTableServer("download", download_list)
+    downloadTableServer("download", download_Table, download_Filename)
   }
   shiny::shinyApp(ui, server)
 }
 #' @rdname downloadTableApp
 #' @export
-downloadTableServer <- function(id, download_list) {
+downloadTableServer <- function(id, download_Table, download_Filename) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # Render table
     output$download_table <- DT::renderDataTable({
-      shiny::req(download_list$Table())
+      shiny::req(download_Table())
     })
-
     # Download handler for table
     output$Table <- shiny::downloadHandler(
-      filename = paste0(shiny::req(download_list$Filename()), ".csv"),
+      filename = paste0(shiny::req(download_Filename())["Table"], ".csv"),
       content = function(file) {
-        table <- shiny::req(download_list$Table())
+        table <- shiny::req(download_Table())
         utils::write.csv(table, file, row.names = FALSE)
       }
     )

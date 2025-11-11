@@ -19,6 +19,8 @@ downloadUI(id)
 \item{id}{identifier for shiny reactive}
 
 \item{download_list}{reactiveValues object}
+
+\item{addDate}{add date to filename if `TRUE`}
 }
 \description{
 Download App

@@ -5,11 +5,11 @@
 \alias{downloadTableServer}
 \alias{downloadTableInput}
 \alias{downloadTableOutput}
-\title{Download App}
+\title{Download Table App}
 \usage{
 downloadTableApp()
 
-downloadTableServer(id, download_list)
+downloadTableServer(id, download_Table, download_Filename)
 
 downloadTableInput(id)
 
@@ -21,5 +21,5 @@ downloadTableOutput(id)
 \item{download_list}{reactiveValues object}
 }
 \description{
-Download App
+Download Table App
 }
