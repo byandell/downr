@@ -59,7 +59,6 @@ downloadPlotServer <- function(id, download_Plot, download_Filename) {
       shiny::req(plot_width_rv(), plot_height_rv())
       width <- shiny::reactive(plot_width_rv() / 2)
       height <- shiny::reactive(plot_height_rv() / 2)
-      message(paste("width", width(), "height", height()))
       shiny::renderPlot({
         shiny::req(download_Plot())
       }, width = width, height = height)
