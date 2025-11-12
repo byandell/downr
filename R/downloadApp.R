@@ -1,5 +1,9 @@
 #' Download App
 #'
+#' Simple app to download plot or table with filename.
+#' The `downloadUI()` function, if used in `ui()`, shows width and height of plot.
+#' See `downloadHideApp()` for app without this function.
+#' 
 #' @param id identifier for shiny reactive
 #' @param download_list reactiveValues object
 #' @param addDate add date to filename if `TRUE`
@@ -22,7 +26,7 @@ downloadApp <- function() {
       shiny::uiOutput("selected_table")
     ),
     downloadInput("download"), # inputs for Plot or Table
-    downloadUI("download"),     # width and height for plot
+    downloadUI("download"),    # width and height for plot
     bslib::card(
       bslib::card_header("Download Preview"),
       downloadOutput("download")    # Only for Preview of downloadApp().

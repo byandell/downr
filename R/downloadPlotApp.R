@@ -40,22 +40,37 @@ downloadPlotServer <- function(id, download_Plot, download_Filename) {
       plot_height_rv(input$plot_height) },
       ignoreNULL = TRUE)
     
-    # Plot dimension presets
+    # Plot dimension presets.
+    # Following works whether or not `downloadPlotUI()` is used.
+    update_preset_width <- function(value) {
+      if(shiny::isTruthy(input$plot_width)) {
+        shiny::updateNumericInput(session, "plot_width", value = value)
+      } else {
+        plot_width_rv(value)
+      }
+    }
+    update_preset_height <- function(value) {
+      if(shiny::isTruthy(input$plot_height)) {
+        shiny::updateNumericInput(session, "plot_height", value = value)
+      } else {
+        plot_height_rv(value)
+      }
+    }
     shiny::observeEvent(input$preset_1to1, {
-      shiny::updateNumericInput(session, "plot_width", value = 800)
-      shiny::updateNumericInput(session, "plot_height", value = 800)
+      update_preset_width(800)
+      update_preset_height(800)
     })
     shiny::observeEvent(input$preset_3to2, {
-      shiny::updateNumericInput(session, "plot_width", value = 900)
-      shiny::updateNumericInput(session, "plot_height", value = 600)
+      update_preset_width(900)
+      update_preset_height(600)
     })
     shiny::observeEvent(input$preset_16to9, {
-      shiny::updateNumericInput(session, "plot_width", value = 1280)
-      shiny::updateNumericInput(session, "plot_height", value = 720)
+      update_preset_width(1280)
+      update_preset_height(720)
     })
     
     # Preview download app.
-    output$preview_plots <- shiny::renderUI({
+    output$preview_plot <- shiny::renderUI({
       shiny::req(plot_width_rv(), plot_height_rv())
       width <- shiny::reactive(plot_width_rv() / 2)
       height <- shiny::reactive(plot_height_rv() / 2)
@@ -161,6 +176,6 @@ downloadPlotUI <- function(id) {
 }
 downloadPlotOutput <- function(id) {
   ns <- shiny::NS(id)
-  shiny::uiOutput(ns("preview_plots"))
+  shiny::uiOutput(ns("preview_plot"))
 }
   
