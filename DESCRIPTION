@@ -1,7 +1,7 @@
 Package: downr
 Type: Package
 Title: Shiny Download App
-Version: 0.2
+Version: 0.2.1
 Date: 2025-11-12
 Authors@R: c(person("Brian S Yandell", "Author",
                 role = c("aut", "cre"),

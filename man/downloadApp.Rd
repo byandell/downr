@@ -28,5 +28,6 @@ downloadHideApp()
 \description{
 Simple app to download plot or table with filename.
 The `downloadUI()` function, if used in `ui()`, shows width and height of plot.
-See `downloadHideApp()` for app without this function.
+See `downloadHideApp()` for app without this function;
+the latter also removes the date on filename.
 }

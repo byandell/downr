@@ -68,6 +68,19 @@ xxxServer <- function(id) {
 }
 ```
 
+## Package use
+
+Install package:
+
+```
+# Install devtools from CRAN
+install.packages("devtools")
+
+# Install downr from GitHub
+library(devtools)
+install_github("byandell/geyser")
+```
+
 ## Options to Consider
 
 The `downloadServer()` has the option `addDate` (used above)
@@ -77,11 +90,3 @@ allows the user to change the dimensions of the plot if desired.
 There is also a `downloadOutput()` which is used with the
 `downloadApp()` to preview the download app functionality,
 but is not meant for more general use.
-
-## Planned Changes
-
-The `downloadApp.R` file is now rather long, with several components.
-It would make sense to separate out shiny modules for the table
-and plot components.
-These would be for developer use, but invisible to the user.
-

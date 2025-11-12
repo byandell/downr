@@ -2,7 +2,8 @@
 #'
 #' Simple app to download plot or table with filename.
 #' The `downloadUI()` function, if used in `ui()`, shows width and height of plot.
-#' See `downloadHideApp()` for app without this function.
+#' See `downloadHideApp()` for app without this function;
+#' the latter also removes the date on filename.
 #' 
 #' @param id identifier for shiny reactive
 #' @param download_list reactiveValues object
@@ -11,7 +12,7 @@
 #' @importFrom shiny actionButton br checkboxInput div downloadButton
 #'             downloadHandler h4 isTruthy moduleServer NS numericInput
 #'             observeEvent reactive reactiveVal reactiveValues renderPlot
-#'             renderUI req selectInput shinyApp tagList textAreaInput textInput
+#'             renderText renderUI req selectInput shinyApp tagList textOutput
 #'             uiOutput updateNumericInput
 #' @importFrom bslib card card_header page_sidebar sidebar
 #' @importFrom utils write.csv    
@@ -78,23 +79,20 @@ downloadServer <- function(id, download_list, addDate = FALSE) {
     # Download Filename.
     base_filename <- shiny::reactive({
       filename <- shiny::req(download_list$Filename())
-      filename <- filename[shiny::req(input$plot_table)]
       if(addDate) {
-        filename <- paste0(filename, "_", format(Sys.time(), "%Y%m%d"))
+        for(i in seq_along(filename))
+          filename[i] <- paste0(filename[i], "_", format(Sys.time(), "%Y%m%d"))
       }
       filename
     })
     # Optional UI to edit filename
-    output$filename <- renderUI({
-      filename <- shiny::req(base_filename())
-      shiny::textInput(ns("filename"), "", filename)
+    output$filename <- shiny::renderText({
+      paste("Filename: ",
+            shiny::req(base_filename())[shiny::req(input$plot_table)])
     })
-    download_filename <- shiny::reactive({
-      dated_filename(shiny::req(base_filename()), input$filename)
-    })
-    
-    downloadPlotServer("download_plot", download_list$Plot, download_filename)
-    downloadTableServer("download_table", download_list$Table, download_filename)
+
+    downloadPlotServer("download_plot", download_list$Plot, base_filename)
+    downloadTableServer("download_table", download_list$Table, base_filename)
     
     ## Switch between `Plot` or `Table`.
     output$buttons <- shiny::renderUI({
@@ -157,7 +155,7 @@ downloadInput <- function(id) {
     # Buttons (rendered by server UI)
     shiny::uiOutput(ns("buttons")),
     # Filename on the right
-    shiny::div(class = "ms-auto mb-0", shiny::uiOutput(ns("filename")))
+    shiny::div(class = "ms-auto mb-0", shiny::textOutput(ns("filename")))
   )
 }
 #' @rdname downloadApp
