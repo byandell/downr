@@ -12,31 +12,31 @@
 downloadTableApp <- function() {
   ui <- bslib::page(
     title = "Test Download Table",
-    downloadTableInput("download"),         # inputs for Plot or Table
-    downloadTableOutput("download")         # download_table
+    downloadTableInput("download_table"), # inputs for Plot or Table
+    downloadTableOutput("download_table") # download_table
   )
   server <- function(input, output, session) { 
-    download_Table <- shiny::reactive(matrix(1:12,nrow=3))
-    download_Filename <- shiny::reactive(c(Table = "twelve"))
-    downloadTableServer("download", download_Table, download_Filename)
+    download_table <- shiny::reactive(matrix(1:12,nrow=3))
+    filename_table <- shiny::reactive("twelve")
+    downloadTableServer("download_table", download_table, filename_table)
   }
   shiny::shinyApp(ui, server)
 }
 #' @rdname downloadTableApp
 #' @export
-downloadTableServer <- function(id, download_Table, download_Filename) {
+downloadTableServer <- function(id, download_table, filename_table) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # Render table
     output$download_table <- DT::renderDataTable({
-      shiny::req(download_Table())
+      shiny::req(download_table())
     })
     # Download handler for table
     output$Table <- shiny::downloadHandler(
-      filename = paste0(shiny::req(download_Filename())["Table"], ".csv"),
+      filename = paste0(shiny::req(filename_table()), ".csv"),
       content = function(file) {
-        table <- shiny::req(download_Table())
+        table <- shiny::req(download_table())
         utils::write.csv(table, file, row.names = FALSE)
       }
     )

@@ -9,7 +9,7 @@
 \usage{
 downloadTableApp()
 
-downloadTableServer(id, download_Table, download_Filename)
+downloadTableServer(id, download_table, filename_table)
 
 downloadTableInput(id)
 

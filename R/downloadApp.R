@@ -58,7 +58,7 @@ downloadApp <- function() {
     })
     download_Filename <- shiny::reactive({
       c(Table = input$selected_table,
-        Plot = input$selected_plot)
+        Plot  = input$selected_plot)
     })
 
     download_list <- shiny::reactiveValues(
@@ -76,8 +76,12 @@ downloadServer <- function(id, download_list, addDate = FALSE) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
+    # Optional UI to edit filename
+    output$filename <- shiny::renderText({
+      shiny::req(filename_base())[shiny::req(input$plot_table)]
+    })
     # Download Filename.
-    base_filename <- shiny::reactive({
+    filename_base <- shiny::reactive({
       filename <- shiny::req(download_list$Filename())
       if(addDate) {
         for(i in seq_along(filename))
@@ -85,14 +89,11 @@ downloadServer <- function(id, download_list, addDate = FALSE) {
       }
       filename
     })
-    # Optional UI to edit filename
-    output$filename <- shiny::renderText({
-      paste("Filename: ",
-            shiny::req(base_filename())[shiny::req(input$plot_table)])
-    })
-
-    downloadPlotServer("download_plot", download_list$Plot, base_filename)
-    downloadTableServer("download_table", download_list$Table, base_filename)
+    filename_plot <- shiny::reactive(filename_base()["Plot"])
+    filename_table <- shiny::reactive(filename_base()["Table"])
+    
+    downloadPlotServer("download_plot", download_list$Plot, filename_plot)
+    downloadTableServer("download_table", download_list$Table, filename_table)
     
     ## Switch between `Plot` or `Table`.
     output$buttons <- shiny::renderUI({

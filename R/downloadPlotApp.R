@@ -13,20 +13,20 @@
 downloadPlotApp <- function() {
   ui <- bslib::page(
     title = "Test Download Plot",
-    downloadPlotInput("download"),         # choices_Plot
-    downloadPlotUI("download"),            # plot_width, plot_height
-    downloadPlotOutput("download")         # download_plot
+    downloadPlotInput("download_plot"), # choices_Plot
+    downloadPlotUI("download_plot"),    # plot_width, plot_height
+    downloadPlotOutput("download_plot") # download_plot
   )
   server <- function(input, output, session) { 
-    download_Plot <- shiny::reactive(plot_null("none"))
-    download_Filename <- shiny::reactive(c(Plot = "none"))
-    downloadPlotServer("download", download_Plot, download_Filename)
+    download_plot <- shiny::reactive(plot_null("none"))
+    filename_plot <- shiny::reactive("none")
+    downloadPlotServer("download_plot", download_plot, filename_plot)
   }
   shiny::shinyApp(ui, server)
 }
 #' @rdname downloadPlotApp
 #' @export
-downloadPlotServer <- function(id, download_Plot, download_Filename) {
+downloadPlotServer <- function(id, download_plot, filename_plot) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -75,7 +75,7 @@ downloadPlotServer <- function(id, download_Plot, download_Filename) {
       width <- shiny::reactive(plot_width_rv() / 2)
       height <- shiny::reactive(plot_height_rv() / 2)
       shiny::renderPlot({
-        shiny::req(download_Plot())
+        shiny::req(download_plot())
       }, width = width, height = height)
     })
 
@@ -140,9 +140,9 @@ downloadPlotServer <- function(id, download_Plot, download_Filename) {
 
     # Download handlers for plot
     output$download_plot_png <- shiny::downloadHandler(
-      paste0(shiny::req(download_Filename())["Plot"], ".png"),
+      paste0(shiny::req(filename_plot()), ".png"),
       content = function(file) {
-        selected_plot <- download_Plot()
+        selected_plot <- shiny::req(download_plot())
         # Use dynamic width/height for saving
         ggplot2::ggsave(file, plot = selected_plot, 
           width = plot_width_rv()/96, # Assuming 96 DPI for conversion from px
@@ -151,9 +151,9 @@ downloadPlotServer <- function(id, download_Plot, download_Filename) {
       }
     )
     output$download_plot_pdf <- shiny::downloadHandler(
-      paste0(shiny::req(download_Filename())["Plot"], ".pdf"),
+      paste0(shiny::req(filename_plot()), ".pdf"),
       content = function(file) {
-        selected_plot <- download_Plot()
+        selected_plot <- shiny::req(download_plot())
         ggplot2::ggsave(file, plot = selected_plot, 
           width = plot_width_rv()/96, 
           height = plot_height_rv()/96, 

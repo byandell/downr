@@ -56,7 +56,7 @@ xxxServer <- function(id) {
     # Download.
     download_Plot <- shiny::reactive(downr::plot_null("none"))
     download_Table <- shiny::reactive(matrix(1:12,nrow=3))
-    download_Filename <- shiny::reactive({c(Plot = "none", Table = "twelve")})
+    download_Filename <- shiny::reactive(c(Plot = "none", Table = "twelve"))
     download_list <- shiny::reactiveValues(
       Filename = download_Filename,
       Plot = download_Plot,
@@ -78,7 +78,7 @@ install.packages("devtools")
 
 # Install downr from GitHub
 library(devtools)
-install_github("byandell/geyser")
+install_github("byandell/downr")
 ```
 
 ## Options to Consider
@@ -87,6 +87,17 @@ The `downloadServer()` has the option `addDate` (used above)
 to postpend the date as `YYYYMMDD` to the base filename.
 The `downloadUI()` user interface, if included in the `ui()` function,
 allows the user to change the dimensions of the plot if desired.
-There is also a `downloadOutput()` which is used with the
+The `downloadUI()` can be skipped, as illustrated with
+[downloadHideApp()](https://github.com/byandell/downr/blob/main/R/downloadHideApp.R).
+There is also a `downloadOutput()` UI function which is used with the
 `downloadApp()` to preview the download app functionality,
 but is not meant for more general use.
+
+The apps
+[downloadPlotApp()](https://github.com/byandell/downr/blob/main/R/downloadPlotApp.R)
+and
+[downloadTableApp()](https://github.com/byandell/downr/blob/main/R/downloadTableApp.R)
+can be used on their own if only one or the other is needed.
+In a sense,
+[downloadApp()](https://github.com/byandell/downr/blob/main/R/downloadApp.R)
+is a wrapper for these two apps.

@@ -9,7 +9,7 @@
 \usage{
 downloadPlotApp()
 
-downloadPlotServer(id, download_Plot, download_Filename)
+downloadPlotServer(id, download_plot, filename_plot)
 
 downloadPlotInput(id)
 
