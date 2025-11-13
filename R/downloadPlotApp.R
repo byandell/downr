@@ -81,6 +81,7 @@ downloadPlotServer <- function(id, download_plot, filename_plot) {
 
     ## Plot buttons.
     output$choices_Plot <- shiny::renderUI({
+      shiny::req(filename_plot())
       # Use supplied `create_` functions or standard `shiny`.
       if (!exists("create_button", mode = "function")) {
         create_button <- shiny::actionButton
@@ -138,9 +139,10 @@ downloadPlotServer <- function(id, download_plot, filename_plot) {
       )
     })
 
+    filename_png <- shiny::reactive(paste0(shiny::req(filename_plot()), ".png"))
     # Download handlers for plot
     output$download_plot_png <- shiny::downloadHandler(
-      paste0(shiny::req(filename_plot()), ".png"),
+      filename_png,
       content = function(file) {
         selected_plot <- shiny::req(download_plot())
         # Use dynamic width/height for saving
@@ -150,8 +152,9 @@ downloadPlotServer <- function(id, download_plot, filename_plot) {
           dpi = 300, units = "in")
       }
     )
+    filename_pdf <- shiny::reactive(paste0(shiny::req(filename_plot()), ".pdf"))
     output$download_plot_pdf <- shiny::downloadHandler(
-      paste0(shiny::req(filename_plot()), ".pdf"),
+      filename_pdf,
       content = function(file) {
         selected_plot <- shiny::req(download_plot())
         ggplot2::ggsave(file, plot = selected_plot, 

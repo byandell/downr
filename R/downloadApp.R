@@ -57,8 +57,8 @@ downloadApp <- function() {
       download_Table[[shiny::req(input$selected_table)]]()
     })
     download_Filename <- shiny::reactive({
-      c(Table = input$selected_table,
-        Plot  = input$selected_plot)
+      c(Table = shiny::req(input$selected_table),
+        Plot  = shiny::req(input$selected_plot))
     })
 
     download_list <- shiny::reactiveValues(
@@ -89,8 +89,10 @@ downloadServer <- function(id, download_list, addDate = FALSE) {
       }
       filename
     })
-    filename_plot <- shiny::reactive(filename_base()["Plot"])
-    filename_table <- shiny::reactive(filename_base()["Table"])
+    filename_plot <- shiny::reactive({
+      shiny::req(download_list$Filename())
+      shiny::req(filename_base())["Plot"]})
+    filename_table <- shiny::reactive(shiny::req(filename_base())["Table"])
     
     downloadPlotServer("download_plot", download_list$Plot, filename_plot)
     downloadTableServer("download_table", download_list$Table, filename_table)

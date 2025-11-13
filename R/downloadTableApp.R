@@ -33,8 +33,9 @@ downloadTableServer <- function(id, download_table, filename_table) {
       shiny::req(download_table())
     })
     # Download handler for table
+    filename_csv <- shiny::reactive(paste0(shiny::req(filename_table()), ".csv"))
     output$Table <- shiny::downloadHandler(
-      filename = paste0(shiny::req(filename_table()), ".csv"),
+      filename_csv,
       content = function(file) {
         table <- shiny::req(download_table())
         utils::write.csv(table, file, row.names = FALSE)
