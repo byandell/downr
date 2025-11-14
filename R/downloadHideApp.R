@@ -48,7 +48,8 @@ downloadHideApp <- function() {
       Plot = selected_plot,
       Table = selected_table)
     
-    downloadServer("download", download_list, addDate = FALSE)
+    downloadServer("download", download_list, addDate = FALSE,
+                   showFilename = FALSE)
   }
   shiny::shinyApp(ui, server)
 }

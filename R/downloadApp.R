@@ -8,6 +8,7 @@
 #' @param id identifier for shiny reactive
 #' @param download_list reactiveValues object
 #' @param addDate add date to filename if `TRUE`
+#' @param showFilename show filename in UI if `TRUE`
 #'
 #' @importFrom shiny actionButton br checkboxInput div downloadButton
 #'             downloadHandler h4 isTruthy moduleServer NS numericInput
@@ -66,13 +67,15 @@ downloadApp <- function() {
       Plot = selected_plot,
       Table = selected_table)
     
-    downloadServer("download", download_list, addDate = TRUE)
+    downloadServer("download", download_list, addDate = TRUE,
+                   showFilename = TRUE)
   }
   shiny::shinyApp(ui, server)
 }
 #' @rdname downloadApp
 #' @export
-downloadServer <- function(id, download_list, addDate = FALSE) {
+downloadServer <- function(id, download_list, addDate = FALSE,
+                           showFilename = FALSE) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -141,6 +144,11 @@ downloadServer <- function(id, download_list, addDate = FALSE) {
                Table = downloadTableOutput(ns("download_table")))
       )
     })
+    output$filename_output <- shiny::renderUI({
+      if(showFilename) {
+        shiny::div(class = "ms-auto mb-0", shiny::textOutput(ns("filename")))
+      }
+    })
   })
 }
 #' @rdname downloadApp
@@ -157,8 +165,8 @@ downloadInput <- function(id) {
                          width = "120px")),
     # Buttons (rendered by server UI)
     shiny::uiOutput(ns("buttons")),
-    # Filename on the right
-    shiny::div(class = "ms-auto mb-0", shiny::textOutput(ns("filename")))
+    # Filename on the right if desired
+    shiny::uiOutput(ns("filename_output"))
   )
 }
 #' @rdname downloadApp

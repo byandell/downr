@@ -81,7 +81,6 @@ downloadPlotServer <- function(id, download_plot, filename_plot) {
 
     ## Plot buttons.
     output$choices_Plot <- shiny::renderUI({
-      shiny::req(filename_plot())
       # Use supplied `create_` functions or standard `shiny`.
       if (!exists("create_button", mode = "function")) {
         create_button <- shiny::actionButton

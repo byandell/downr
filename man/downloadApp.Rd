@@ -10,7 +10,7 @@
 \usage{
 downloadApp()
 
-downloadServer(id, download_list, addDate = FALSE)
+downloadServer(id, download_list, addDate = FALSE, showFilename = FALSE)
 
 downloadInput(id)
 
@@ -24,6 +24,8 @@ downloadHideApp()
 \item{download_list}{reactiveValues object}
 
 \item{addDate}{add date to filename if `TRUE`}
+
+\item{showFilename}{show filename in UI if `TRUE`}
 }
 \description{
 Simple app to download plot or table with filename.
