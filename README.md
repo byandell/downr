@@ -87,13 +87,15 @@ The `downloadServer()` has the option `addDate` (used above)
 to postpend the date as `YYYYMMDD` to the base filename.
 The `downloadUI()` user interface, if included in the `ui()` function,
 allows the user to change the dimensions of the plot if desired.
-The `downloadUI()` can be skipped (default), as illustrated with
-[downloadHideApp()](https://github.com/byandell/downr/blob/main/R/downloadHideApp.R),
-which also shows the default hiding the `filename`
-(option `showFilename`).
+The `downloadUI()` can be skipped to simplify display
+if user does not need to adjust overall plot size.
 There is also a `downloadOutput()` UI function which is used with the
 `downloadApp()` to preview the download app functionality,
 but is not meant for more general use.
+
+[downloadApp()](https://github.com/byandell/downr/blob/main/R/downloadApp.R)
+has arguments to add date to `filename` (`addDate = TRUE`)
+and to show the `filename` on the page (`showFilename = TRUE`).
 
 The apps
 [downloadPlotApp()](https://github.com/byandell/downr/blob/main/R/downloadPlotApp.R)

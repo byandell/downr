@@ -19,7 +19,7 @@
 #' @importFrom utils write.csv    
 #' @importFrom ggplot2 ggsave
 #' @export
-downloadApp <- function() {
+downloadApp <- function(addDate = FALSE, showFilename = FALSE) {
   ui <- bslib::page_sidebar(
     title = "Test Download",
     sidebar = bslib::sidebar("side_panel", width = 400,
@@ -28,7 +28,7 @@ downloadApp <- function() {
       shiny::uiOutput("selected_table")
     ),
     downloadInput("download"), # inputs for Plot or Table
-    downloadUI("download"),    # width and height for plot
+    downloadUI("download"),    # (optional) width and height for plot
     bslib::card(
       bslib::card_header("Download Preview"),
       downloadOutput("download")    # Only for Preview of downloadApp().
