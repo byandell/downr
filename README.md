@@ -96,6 +96,8 @@ but is not meant for more general use.
 [downloadApp()](https://github.com/byandell/downr/blob/main/R/downloadApp.R)
 has arguments to add date to `filename` (`addDate = TRUE`)
 and to show the `filename` on the page (`showFilename = TRUE`).
+It also allows previewer to set `Type` or use `Plot/Table` button;
+valid user-provided `Type` value in `download_list` hides `Plot/Table` button.
 
 The apps
 [downloadPlotApp()](https://github.com/byandell/downr/blob/main/R/downloadPlotApp.R)
