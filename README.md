@@ -17,7 +17,9 @@ when asked to be saved.
 
 ## Download List
 
-The `download_list` is a list of reactives
+Typically, the `download_list` is a
+[reactiveValues](https://mastering-shiny.org/reactivity-objects.html)
+object, basically list of reactives
 
 ```
 download_list
@@ -25,6 +27,13 @@ download_list
 ├── Table     # reactive with table to be saved
 └── Filename  # reactive with character 2-vector of file names
 ```
+
+Alternatively, `download_list` may be a reactive that
+evaluates as a reactivevalues object.
+This is useful when there is a choice among multiple panels
+with each of their servers returning a `download_list`.
+See for instance,
+[qtl2shinyServer()](https://github.com/AttieLab-Systems-Genetics/qtl2shiny/blob/master/R/qtl2shinyApp.R).
 
 ## Use in shiny app
 

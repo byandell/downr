@@ -9,7 +9,7 @@
 \usage{
 downloadApp(addDate = FALSE, showFilename = FALSE)
 
-downloadServer(id, download_list, addDate = FALSE, showFilename = FALSE)
+downloadServer(id, download, addDate = FALSE, showFilename = FALSE)
 
 downloadInput(id)
 
@@ -22,7 +22,7 @@ downloadUI(id)
 
 \item{id}{identifier for shiny reactive}
 
-\item{download_list}{reactiveValues object}
+\item{download}{reactive or reactiveValues object}
 }
 \description{
 Simple app to download plot or table with filename.

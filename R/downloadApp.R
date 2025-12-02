@@ -6,7 +6,7 @@
 #' the latter also removes the date on filename.
 #' 
 #' @param id identifier for shiny reactive
-#' @param download_list reactiveValues object
+#' @param download reactive or reactiveValues object
 #' @param addDate add date to filename if `TRUE`
 #' @param showFilename show filename in UI if `TRUE`
 #'
@@ -81,13 +81,26 @@ downloadApp <- function(addDate = FALSE, showFilename = FALSE) {
 }
 #' @rdname downloadApp
 #' @export
-downloadServer <- function(id, download_list, addDate = FALSE,
+downloadServer <- function(id, download, addDate = FALSE,
                            showFilename = FALSE) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
+    download_list <- shiny::reactive({
+      if(shiny::is.reactivevalues(download)) {
+        out <- download
+      } else {
+        if(shiny::is.reactive(download)) {
+          out <- download()
+        } else {
+          message(class(download))
+          stop(class(download))
+        }
+      }
+      out
+    })
     download_type <- shiny::reactive({
-      out <- download_list$Type
+      out <- download_list()$Type
       if(is.reactive(out)) {
         out <- out()
       }
@@ -117,7 +130,7 @@ downloadServer <- function(id, download_list, addDate = FALSE,
     })
     # Download Filename.
     filename_base <- shiny::reactive({
-      filename <- shiny::req(download_list$Filename())
+      filename <- shiny::req(download_list()$Filename())
       if(addDate) {
         for(i in seq_along(filename))
           filename[i] <- paste0(filename[i], "_", format(Sys.time(), "%Y%m%d"))
@@ -125,12 +138,12 @@ downloadServer <- function(id, download_list, addDate = FALSE,
       filename
     })
     filename_plot <- shiny::reactive({
-      shiny::req(download_list$Filename())
+      shiny::req(download_list()$Filename())
       shiny::req(filename_base())["Plot"]})
     filename_table <- shiny::reactive(shiny::req(filename_base())["Table"])
     
-    downloadPlotServer("download_plot", download_list$Plot, filename_plot)
-    downloadTableServer("download_table", download_list$Table, filename_table)
+    downloadPlotServer("download_plot", download_list()$Plot, filename_plot)
+    downloadTableServer("download_table", download_list()$Table, filename_table)
     
     ## Switch between `Plot` or `Table`.
     output$buttons <- shiny::renderUI({
@@ -169,7 +182,7 @@ downloadServer <- function(id, download_list, addDate = FALSE,
       plot_table <- shiny::req(plot_table())
       list(
         "Filename",
-        download_list$Filename()[plot_table],
+        download_list()$Filename()[plot_table],
         shiny::br(),
         switch(plot_table,
                Plot  = downloadPlotOutput(ns("download_plot")),
