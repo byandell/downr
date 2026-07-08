@@ -3,8 +3,7 @@
 #' @param id identifier for shiny reactive
 #' @param download_list reactiveValues object
 #'
-#' @importFrom shiny downloadButton downloadHandler isTruthy moduleServer NS
-#'             reactive reactiveValues req shinyApp
+#' @importFrom shiny downloadButton downloadHandler isTruthy moduleServer NS reactive reactiveValues req shinyApp
 #' @importFrom bslib page
 #' @importFrom DT dataTableOutput renderDataTable
 #' @importFrom utils write.csv    

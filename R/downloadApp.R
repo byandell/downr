@@ -10,11 +10,7 @@
 #' @param addDate add date to filename if `TRUE`
 #' @param showFilename show filename in UI if `TRUE`
 #'
-#' @importFrom shiny actionButton br checkboxInput div downloadButton
-#'             downloadHandler h4 isTruthy moduleServer NS numericInput
-#'             observeEvent reactive reactiveVal reactiveValues renderPlot
-#'             renderText renderUI req selectInput shinyApp tagList textOutput
-#'             uiOutput updateNumericInput
+#' @importFrom shiny actionButton br checkboxInput div downloadButton downloadHandler h4 isTruthy moduleServer NS numericInput observeEvent reactive reactiveVal reactiveValues renderPlot renderText renderUI req selectInput shinyApp tagList textOutput uiOutput updateNumericInput
 #' @importFrom bslib card card_header page_sidebar sidebar
 #' @importFrom utils write.csv    
 #' @importFrom ggplot2 ggsave
@@ -217,6 +213,8 @@ downloadUI <- function(id) {
   ns <- shiny::NS(id)
   shiny::uiOutput(ns("dims"))
 }
+#' @rdname downloadApp
+#' @export
 downloadOutput <- function(id) {
   ns <- shiny::NS(id)
   shiny::uiOutput(ns("preview"))

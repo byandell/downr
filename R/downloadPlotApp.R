@@ -3,10 +3,7 @@
 #' @param id identifier for shiny reactive
 #' @param download_list reactiveValues object
 #'
-#' @importFrom shiny  div downloadButton downloadHandler moduleServer NS
-#'             numericInput observeEvent reactive reactiveVal reactiveValues
-#'             renderPlot renderUI req shinyApp tagList uiOutput
-#'             updateNumericInput
+#' @importFrom shiny div downloadButton downloadHandler moduleServer NS numericInput observeEvent reactive reactiveVal reactiveValues renderPlot renderUI req shinyApp tagList uiOutput updateNumericInput
 #' @importFrom bslib page
 #' @importFrom ggplot2 ggsave
 #' @export

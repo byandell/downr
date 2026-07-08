@@ -2,6 +2,7 @@
 
 export(downloadApp)
 export(downloadInput)
+export(downloadOutput)
 export(downloadPlotApp)
 export(downloadPlotInput)
 export(downloadPlotServer)

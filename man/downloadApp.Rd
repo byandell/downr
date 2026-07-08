@@ -5,6 +5,7 @@
 \alias{downloadServer}
 \alias{downloadInput}
 \alias{downloadUI}
+\alias{downloadOutput}
 \title{Download App}
 \usage{
 downloadApp(addDate = FALSE, showFilename = FALSE)
@@ -14,6 +15,8 @@ downloadServer(id, download, addDate = FALSE, showFilename = FALSE)
 downloadInput(id)
 
 downloadUI(id)
+
+downloadOutput(id)
 }
 \arguments{
 \item{addDate}{add date to filename if `TRUE`}
