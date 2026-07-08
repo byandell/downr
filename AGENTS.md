@@ -2,7 +2,10 @@
 
 ## Package Overview
 
-`downr` is an R package providing reusable Shiny download modules for plots and tables. It wraps the Shiny `downloadHandler` toolset with a customized UI/UX developed for research team workflows.
+`downr` is an R package providing reusable Shiny download modules
+for plots and tables.
+It wraps the Shiny `downloadHandler` toolset with a customized UI/UX developed
+for research team workflows.
 
 - **GitHub**: https://github.com/byandell/downr
 - **License**: GPL-3
@@ -21,7 +24,9 @@
 
 ### `download_list`
 
-The central data structure passed to download servers. It is a `shiny::reactiveValues` object (or a reactive that evaluates to one) with three named reactives:
+The central data structure passed to download servers.
+It is a `shiny::reactiveValues` object (or a reactive that evaluates to one)
+with three named reactives:
 
 ```
 download_list
@@ -32,7 +37,8 @@ download_list
 
 ### Exported Functions
 
-- `downloadInput(id)` — UI input controls (type selector, optional width/height via `downloadUI()`)
+- `downloadInput(id)` — UI input controls (type selector, optional width/height
+via `downloadUI()`)
 - `downloadServer(id, download_list, addDate)` — server-side module
 - `downloadUI(id)` — optional UI for plot dimension controls
 - `downloadOutput(id)` — UI for previewing download app output
@@ -58,5 +64,7 @@ xxxApp <- function() {
 
 ## Roxygen Notes
 
-- Uses roxygen2 v8+: each `@importFrom` tag **must be a single line** (no continuation-indented multi-line form).
-- `RoxygenNote` in DESCRIPTION should be updated after running `devtools::document()`.
+- Uses roxygen2 v8+: each `@importFrom` tag **must be a single line**
+(no continuation-indented multi-line form).
+- `RoxygenNote` in DESCRIPTION should be updated after running
+`devtools::document()`.
